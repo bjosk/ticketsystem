@@ -2,6 +2,8 @@ package com.ticketsystem.ticketsystem.Model;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 public class User {
     @Id
@@ -12,6 +14,16 @@ public class User {
     private String email;
     @Enumerated(EnumType.STRING)
     private Role role;
+    @OneToMany(mappedBy = "submittedBy")
+    private List<Ticket> submittedTickets;
+
+    public List<Ticket> getSubmittedTickets() {
+        return submittedTickets;
+    }
+
+    public void setSubmittedTickets(List<Ticket> submittedTickets) {
+        this.submittedTickets = submittedTickets;
+    }
 
     public Role getRole() {
         return role;
