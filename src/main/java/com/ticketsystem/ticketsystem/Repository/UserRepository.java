@@ -1,4 +1,4 @@
-package com.ticketsystem.ticketsystem;
+package com.ticketsystem.ticketsystem.Repository;
 
 import com.ticketsystem.ticketsystem.Model.User;
 import org.springframework.data.repository.CrudRepository;
