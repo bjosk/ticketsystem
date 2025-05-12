@@ -31,6 +31,10 @@ public class Ticket {
         createdAt = LocalDateTime.now();
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
     public List<Comment> getComments() {
         return comments;
     }
