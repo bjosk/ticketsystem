@@ -9,8 +9,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.time.LocalDateTime;
-
 @SpringBootApplication
 public class TicketSystemApplication implements CommandLineRunner {
 
@@ -54,7 +52,7 @@ public class TicketSystemApplication implements CommandLineRunner {
 
         // Fetch and print everything
         System.out.println("User: " + userRepository.findById(user.getId()).orElse(null));
-        System.out.println("Ticket: " + ticketRepository.findById(ticket.getId()).orElse(null));
+        System.out.println("Ticket: " + ticketRepository.findById(ticket.getTicketId()).orElse(null));
         System.out.println("Comment: " + commentRepository.findById(comment.getId()).orElse(null));
     }
 }

@@ -3,14 +3,13 @@ package com.ticketsystem.ticketsystem.Model;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @Entity
 public class Ticket {
     @Id
     @GeneratedValue
-    private Long id;
+    private Long ticketId;
     private String shortDescription;
     private String description;
     @Enumerated(EnumType.STRING)
@@ -43,8 +42,8 @@ public class Ticket {
         this.comments = comments;
     }
 
-    public Long getId() {
-        return id;
+    public Long getTicketId() {
+        return ticketId;
     }
 
     public String getShortDescription() {
@@ -98,7 +97,7 @@ public class Ticket {
     @Override
     public String toString() {
         return "Ticket{" +
-                "id=" + id +
+                "id=" + ticketId +
                 ", shortDescription='" + shortDescription + '\'' +
                 ", description='" + description + '\'' +
                 ", ticketStatus=" + ticketStatus +

@@ -2,9 +2,17 @@ package com.ticketsystem.ticketsystem.Model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "id"),
+                @UniqueConstraint(columnNames = "username"),
+                @UniqueConstraint(columnNames = "email")
+        }
+)
 public class User {
     @Id
     @GeneratedValue
@@ -15,7 +23,12 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
     @OneToMany(mappedBy = "submittedBy")
-    private List<Ticket> submittedTickets;
+    private List<Ticket> submittedTickets = new ArrayList<>();
+
+    @PrePersist
+    protected void onCreate() {
+        role = Role.USER;
+    }
 
     public List<Ticket> getSubmittedTickets() {
         return submittedTickets;

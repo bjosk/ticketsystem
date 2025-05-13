@@ -68,7 +68,7 @@ public class Comment {
                 ", text='" + text + '\'' +
                 ", createdAt=" + createdAt +
                 ", author=" + (author != null ? author.getUsername() : "null") +
-                ", ticketId=" + (ticket != null ? ticket.getId() : "null") +
+                ", ticketId=" + (ticket != null ? ticket.getTicketId() : "null") +
                 '}';
     }
 }
