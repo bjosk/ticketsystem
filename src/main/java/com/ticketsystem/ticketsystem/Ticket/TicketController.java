@@ -1,5 +1,6 @@
 package com.ticketsystem.ticketsystem.Ticket;
 
+import com.ticketsystem.ticketsystem.Comment.CommentResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,11 @@ public class TicketController {
 
     @Autowired
     private TicketService ticketService;
+
+    @GetMapping("/{ticketId}/comments")
+    public List<CommentResponse> getCommentsForTicket(@PathVariable Long ticketId) {
+        return ticketService.getCommentsForTicket(ticketId);
+    }
 
     @PostMapping
     public TicketResponse createTicket(@RequestBody TicketRequest request) {

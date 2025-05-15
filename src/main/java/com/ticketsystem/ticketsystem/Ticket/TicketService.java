@@ -1,5 +1,6 @@
 package com.ticketsystem.ticketsystem.Ticket;
 
+import com.ticketsystem.ticketsystem.Comment.CommentResponse;
 import com.ticketsystem.ticketsystem.User.User;
 import com.ticketsystem.ticketsystem.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,23 @@ public class TicketService{
 
     @Autowired
     private UserRepository userRepository;
+
+    public List<CommentResponse> getCommentsForTicket(Long ticketId) {
+        Ticket ticket = ticketRepository.findById(ticketId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket with ID " + ticketId + " not found"));
+
+        return ticket.getComments()
+                .stream()
+                .map(comment -> new CommentResponse(
+                        comment.getId(),
+                        comment.getText(),
+                        comment.getCreatedAt(),
+                        comment.getAuthor().getId(),
+                        comment.getAuthor().getUsername(),
+                        comment.getTicket().getTicketId()
+                ))
+                .toList();
+    }
 
     public TicketResponse getTicketById(@PathVariable Long id) {
         Ticket ticket = ticketRepository.findById(id).orElseThrow();

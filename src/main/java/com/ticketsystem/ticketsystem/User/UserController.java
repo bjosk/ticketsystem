@@ -26,7 +26,7 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    // Get tickets by userId
+    // Get tickets by authorId
     @GetMapping("/{userId}/tickets")
     public List<TicketResponse> getTicketsByUserId(@PathVariable Long userId) {
         return userService.getTicketsByUserId(userId);
