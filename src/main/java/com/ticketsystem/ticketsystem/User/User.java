@@ -1,5 +1,6 @@
-package com.ticketsystem.ticketsystem.Model;
+package com.ticketsystem.ticketsystem.User;
 
+import com.ticketsystem.ticketsystem.Ticket.Ticket;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;

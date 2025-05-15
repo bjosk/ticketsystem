@@ -1,31 +1,21 @@
-package com.ticketsystem.ticketsystem.Controller;
+package com.ticketsystem.ticketsystem.User;
 
-import com.ticketsystem.ticketsystem.Model.Ticket;
-import com.ticketsystem.ticketsystem.Model.User;
-import com.ticketsystem.ticketsystem.Repository.UserRepository;
-import com.ticketsystem.ticketsystem.dto.TicketResponse;
-import com.ticketsystem.ticketsystem.dto.UserRequest;
-import com.ticketsystem.ticketsystem.dto.UserResponse;
+import com.ticketsystem.ticketsystem.Ticket.Ticket;
+import com.ticketsystem.ticketsystem.Ticket.TicketResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/api/users")
-public class UserController {
+@Service
+public class UserService {
 
     @Autowired
     private UserRepository userRepository;
 
-
-    // Create a new user (register)
-    @PostMapping
-    public UserResponse createUser(@RequestBody UserRequest request) {
-
-        //Check if username or email is taken. If taken an exception is thrown.
+    public UserResponse createUser(UserRequest request) {
         if (userRepository.existsByUsername(request.username())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Username is already taken");
         }
@@ -33,6 +23,7 @@ public class UserController {
         if (userRepository.existsByEmail(request.email())) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Email is already in use");
         }
+
         User user = new User();
         user.setUsername(request.username());
         user.setPassword(request.password());
@@ -49,13 +40,10 @@ public class UserController {
                         .stream()
                         .map(Ticket::getTicketId)
                         .toList()
-
         );
     }
 
-    // Get all users
-    @GetMapping
-    public List<UserResponse> getAllUsers(){
+    public List<UserResponse> getAllUsers() {
         return ((List<User>) userRepository.findAll()).stream()
                 .map(user -> new UserResponse(
                         user.getId(),
@@ -66,23 +54,16 @@ public class UserController {
                                 .stream()
                                 .map(Ticket::getTicketId)
                                 .toList()
-
                 ))
                 .toList();
     }
 
-    // Get tickets by userId
-    @GetMapping("/{userId}/tickets")
-    public List<TicketResponse> getTicketsByUserId(@PathVariable Long userId) {
+    public List<TicketResponse> getTicketsByUserId(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with ID " + userId + " not found"));
 
-        if (userRepository.findById(userId).isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User with ID " + userId + " not found");
-        }
-        List<Ticket> userTickets = userRepository.findById(userId)
-                .orElseThrow()
-                .getSubmittedTickets();
-
-        return userTickets.stream()
+        return user.getSubmittedTickets()
+                .stream()
                 .map(ticket -> new TicketResponse(
                         ticket.getTicketId(),
                         ticket.getShortDescription(),
@@ -95,5 +76,4 @@ public class UserController {
                 ))
                 .toList();
     }
-
 }

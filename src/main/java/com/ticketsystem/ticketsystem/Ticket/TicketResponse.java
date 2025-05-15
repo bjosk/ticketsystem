@@ -1,4 +1,4 @@
-package com.ticketsystem.ticketsystem.dto;
+package com.ticketsystem.ticketsystem.Ticket;
 
 import java.time.LocalDateTime;
 

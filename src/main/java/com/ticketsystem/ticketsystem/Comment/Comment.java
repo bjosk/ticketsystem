@@ -1,5 +1,7 @@
-package com.ticketsystem.ticketsystem.Model;
+package com.ticketsystem.ticketsystem.Comment;
 
+import com.ticketsystem.ticketsystem.Ticket.Ticket;
+import com.ticketsystem.ticketsystem.User.User;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;

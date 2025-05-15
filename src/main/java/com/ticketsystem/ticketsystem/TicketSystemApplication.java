@@ -1,9 +1,13 @@
 package com.ticketsystem.ticketsystem;
 
-import com.ticketsystem.ticketsystem.Model.*;
-import com.ticketsystem.ticketsystem.Repository.CommentRepository;
-import com.ticketsystem.ticketsystem.Repository.TicketRepository;
-import com.ticketsystem.ticketsystem.Repository.UserRepository;
+import com.ticketsystem.ticketsystem.Comment.Comment;
+import com.ticketsystem.ticketsystem.Ticket.Ticket;
+import com.ticketsystem.ticketsystem.Ticket.TicketStatus;
+import com.ticketsystem.ticketsystem.Comment.CommentRepository;
+import com.ticketsystem.ticketsystem.Ticket.TicketRepository;
+import com.ticketsystem.ticketsystem.User.Role;
+import com.ticketsystem.ticketsystem.User.User;
+import com.ticketsystem.ticketsystem.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

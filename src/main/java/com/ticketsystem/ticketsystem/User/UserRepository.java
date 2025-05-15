@@ -1,6 +1,5 @@
-package com.ticketsystem.ticketsystem.Repository;
+package com.ticketsystem.ticketsystem.User;
 
-import com.ticketsystem.ticketsystem.Model.User;
 import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<User, Long> {

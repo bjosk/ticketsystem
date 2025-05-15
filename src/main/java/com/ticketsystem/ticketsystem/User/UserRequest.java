@@ -1,6 +1,4 @@
-package com.ticketsystem.ticketsystem.dto;
-
-import java.util.List;
+package com.ticketsystem.ticketsystem.User;
 
 public record UserRequest(
         String username,

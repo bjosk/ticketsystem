@@ -1,4 +1,4 @@
-package com.ticketsystem.ticketsystem.dto;
+package com.ticketsystem.ticketsystem.User;
 
 import java.util.List;
 

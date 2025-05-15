@@ -1,4 +1,4 @@
-package com.ticketsystem.ticketsystem.Model;
+package com.ticketsystem.ticketsystem.Ticket;
 
 public enum TicketStatus {
     NEW,
