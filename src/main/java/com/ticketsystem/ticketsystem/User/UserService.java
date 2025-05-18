@@ -4,6 +4,8 @@ import com.ticketsystem.ticketsystem.Ticket.Ticket;
 import com.ticketsystem.ticketsystem.Ticket.TicketResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -14,6 +16,37 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
+
+//    public UserResponse loadOrCreateUser(Authentication auth) {
+//        Jwt jwt = (Jwt) auth.getPrincipal();
+//        String externalId = jwt.getSubject(); // e.g., "auth0|abc123"
+//        String email = jwt.getClaim("email");
+//        String username = jwt.getClaim("username");
+//
+//        // Try to find existing user
+//        User user = userRepository.findByExternalId(externalId).orElseGet(() -> {
+//            // Create new user
+//            User newUser = new User();
+//            newUser.setUsername(username); // or derive from another claim
+//            newUser.setEmail(email);
+//            newUser.setExternalId(externalId);
+//            return userRepository.save(newUser);
+//        });
+//
+//        // Convert to DTO
+//        return new UserResponse(
+//                user.getId(),
+//                user.getUsername(),
+//                user.getEmail(),
+//                user.getRole().name(),
+//                user.getSubmittedTickets()
+//                        .stream()
+//                        .map(Ticket::getTicketId)
+//                        .toList()
+//        );
+//    }
+
+
 
     public UserResponse createUser(UserRequest request) {
         if (userRepository.existsByUsername(request.username())) {

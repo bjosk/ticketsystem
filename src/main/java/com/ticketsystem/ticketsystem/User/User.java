@@ -18,6 +18,7 @@ public class User {
     @Id
     @GeneratedValue
     private Long id;
+    private String externalId;
     private String username;
     private String password;
     private String email;
@@ -73,6 +74,15 @@ public class User {
 
     public Long getId() {
         return id;
+    }
+
+    @Column(unique = true)
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(String externalId) {
+        this.externalId = externalId;
     }
 
     @Override

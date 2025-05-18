@@ -2,6 +2,7 @@ package com.ticketsystem.ticketsystem.User;
 
 import com.ticketsystem.ticketsystem.Ticket.TicketResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,5 +32,11 @@ public class UserController {
     public List<TicketResponse> getTicketsByUserId(@PathVariable Long userId) {
         return userService.getTicketsByUserId(userId);
     }
+
+//    @GetMapping("/me")
+//    public UserResponse getCurrentUser(Authentication auth) {
+//        return userService.loadOrCreateUser(auth);
+//    }
+
 
 }
