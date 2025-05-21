@@ -8,7 +8,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/login")
 public class AuthController {
 
     @Autowired
@@ -20,7 +20,7 @@ public class AuthController {
         this.userRepository = userRepository;
     }
 
-    @PostMapping("/login")
+    @PostMapping
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
         return authService.login(request);
     }

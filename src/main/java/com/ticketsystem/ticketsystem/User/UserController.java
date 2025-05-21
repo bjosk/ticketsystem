@@ -13,7 +13,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-
     // Create a new user (register)
     @PostMapping
     public UserResponse createUser(@RequestBody UserRequest request) {
