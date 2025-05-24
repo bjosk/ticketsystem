@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
+import TestView from "@/views/TestView.vue";
 
 const routes = [
   {
@@ -8,8 +9,8 @@ const routes = [
     component: LoginView
   },
   {
-    path: '/:pathMatch(.*)*',
-    redirect: '/login'
+    path: '/test',
+    component: TestView
   }
 ]
 

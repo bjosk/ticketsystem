@@ -1,26 +1,61 @@
+<script setup>
+import { ref } from 'vue';
+import axios from '@/services/axios';
+import { useRouter } from 'vue-router';
+
+const username = ref('');
+const password = ref('');
+const error = ref('');
+const router = useRouter();
+
+const submit = async () => {
+  try {
+    const response = await axios.post('/login', {
+      username: username.value,
+      password: password.value
+    });
+
+    console.log('Login success:', response.data);
+    await router.push('/test');
+  } catch (err) {
+    error.value = 'Login failed. Please try again.';
+    console.error(err);
+  }
+};
+</script>
+
 <template>
-  <form class="p-4 border rounded bg-white shadow-sm w-50">
-    <h2 class="mb-3 text-center">Login</h2>
+  <form @submit.prevent="submit" class="p-4 border rounded bg-white shadow-sm w-50">
+    <h2 class="mb-3 text-center">Login Test</h2>
+
     <div class="mb-3">
       <label for="username" class="form-label">Username</label>
       <input
+        v-model="username"
         type="text"
         class="form-control"
         id="username"
         placeholder="Enter username"
+        required
       />
     </div>
 
     <div class="mb-3">
       <label for="password" class="form-label">Password</label>
       <input
+        v-model="password"
         type="password"
         class="form-control"
         id="password"
         placeholder="Enter password"
+        required
       />
     </div>
 
     <button type="submit" class="btn btn-primary w-100">Login</button>
+
+    <div v-if="error" class="alert alert-danger mt-3">
+      {{ error }}
+    </div>
   </form>
 </template>

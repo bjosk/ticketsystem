@@ -16,7 +16,6 @@ public class AuthConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable) // ✅ Updated syntax
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/**").permitAll()  // Allow unauthenticated access
                         .anyRequest().authenticated()
