@@ -16,6 +16,7 @@ public class AuthConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .csrf(AbstractHttpConfigurer::disable) // Disables CSRF
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/**").permitAll()  // Allow unauthenticated access
                         .anyRequest().authenticated()

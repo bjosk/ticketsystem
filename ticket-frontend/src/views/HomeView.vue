@@ -1,9 +1,9 @@
 <script setup lang="ts">
-
+  import AppNavBar from "@/components/AppNavBar.vue";
 </script>
 
 <template>
-<h1>Test</h1>
+    <AppNavBar />
 </template>
 
 <style scoped>
