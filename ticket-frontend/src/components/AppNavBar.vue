@@ -12,14 +12,14 @@ const logout = () => {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <nav class="navbar navbar-expand navbar-light bg-light">
     <a class="navbar-brand" href="#">
-      <img src="./icons/FireLoge.png" alt="Logo" width="30" height="30" class="d-inline-block align-text-top" />
-      TicketSys
+      <img src="./icons/FireLoge.png" alt="Logo" width="30" class="d-inline-block align-text-top" />
+      TicketSystem
     </a>
 
-    <div class="collapse navbar-collapse">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+    <div class=" container-fluid">
+      <ul class="navbar-nav">
         <li class="nav-item">
           <router-link class="nav-link" to="/home">Home</router-link>
         </li>
@@ -28,7 +28,7 @@ const logout = () => {
         </li>
       </ul>
 
-      <button class="btn btn-outline-danger" @click="logout">Logout</button>
+      <button class="btn btn-outline-danger me-2" @click="logout">Logout</button>
     </div>
   </nav>
 </template>
