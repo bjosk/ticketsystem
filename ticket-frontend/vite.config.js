@@ -15,4 +15,14 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url))
     },
   },
+  // For development. Forwards calls to backend
+  server: {
+    proxy: {
+      '/api': {
+        target: 'http://ticketsystem-backend:8080',
+        changeOrigin: true,
+      }
+    }
+  }
+
 })

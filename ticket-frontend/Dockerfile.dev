@@ -1,9 +1,11 @@
-FROM node:18
+FROM node:18-alpine
 
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
-COPY . .
 
-EXPOSE 5173
-CMD ["npm", "run", "dev"]
+# Only install deps here
+COPY package*.json ./
+
+RUN npm install
+
+# Leave source code changes to volume mount
+CMD ["npm", "run", "dev", "--", "--host"]
