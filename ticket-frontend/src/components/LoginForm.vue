@@ -2,11 +2,13 @@
 import { ref } from 'vue';
 import axios from '@/services/axios';
 import { useRouter } from 'vue-router';
+import {useAuthStore  } from "@/stores/auth.js";
 
 const username = ref('');
 const password = ref('');
 const error = ref('');
 const router = useRouter();
+const auth = useAuthStore();
 
 const submit = async () => {
   try {
@@ -15,8 +17,9 @@ const submit = async () => {
       password: password.value
     });
 
-    console.log('Login success:', response.data);
-    await router.push('/test');
+    auth.login(response.data);
+    console.log(auth.user);
+    await router.push('/home');
   } catch (err) {
     error.value = 'Login failed. Please try again.';
     console.error(err);
