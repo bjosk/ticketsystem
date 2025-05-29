@@ -1,3 +1,19 @@
 #listOfTickets tr.cursor-pointer {
   cursor: pointer;
 }
+
+.bg {
+  background-color: #F2F2F2 !important;
+}
+
+.color-primary-body {
+  background-color: #000000 !important;
+}
+
+.bg-secondary {
+  background-color: #EAE4D5 !important;
+}
+
+.color-accent {
+  background-color: #B6B09F !important;
+}

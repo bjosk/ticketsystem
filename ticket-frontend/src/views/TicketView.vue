@@ -98,50 +98,25 @@ const formattedDate = computed(() => {
           </tr>
           </tbody>
         </table>
+        <div>
+          <label for="shortDescription" class="form-label fw-bold">Short description</label>
+          <input v-model="ticket.shortDescription"
+                 type="text"
+                 id="shortDescription"
+                 class="form-control"
+                 disabled
+          />
+        </div>
+        <div>
+          <label for="description" class="form-label fw-bold">Description</label>
+          <input v-model="ticket.description"
+                 type="text"
+                 id="description"
+                 class="form-control"
+                 disabled
+          />
+        </div>
       </form>
-
-<!--      <form>-->
-<!--        <div class="row g-3 align-items-center">-->
-
-<!--          &lt;!&ndash; Ticket ID &ndash;&gt;-->
-<!--          <div class="col-md-4">-->
-<!--            <div class="row g-2 align-items-center">-->
-<!--              <div class="col-auto">-->
-<!--                <label for="ticketId1" class="col-form-label">ID:</label>-->
-<!--              </div>-->
-<!--              <div class="col">-->
-<!--                <input v-model="ticket.ticketId" type="number" id="ticketId1" class="form-control" disabled>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-
-<!--          &lt;!&ndash; Username &ndash;&gt;-->
-<!--          <div class="col-md-4">-->
-<!--            <div class="row g-2 align-items-center">-->
-<!--              <div class="col-auto">-->
-<!--                <label for="username" class="col-form-label">Username:</label>-->
-<!--              </div>-->
-<!--              <div class="col">-->
-<!--                <input v-model="ticket.submittedByUsername" type="text" id="username" class="form-control" disabled>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-
-<!--          &lt;!&ndash; Created At &ndash;&gt;-->
-<!--          <div class="col-md-4">-->
-<!--            <div class="row g-2 align-items-center">-->
-<!--              <div class="col-auto">-->
-<!--                <label for="createdAt" class="col-form-label">Created at:</label>-->
-<!--              </div>-->
-<!--              <div class="col">-->
-<!--                <input :value="formattedDate" type="text" id="createdAt" class="form-control" disabled>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </div>-->
-
-<!--        </div>-->
-<!--      </form>-->
-      <p>{{ ticket }}</p>
     </div>
 
 </template>

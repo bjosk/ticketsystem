@@ -41,7 +41,7 @@
 
 <template>
     <AppNavBar />
-  <div class="container mt-4">
+  <div class="container mt-4 vh-100">
     <h2 v-if="auth.user.role === 'AGENT'">All Tickets</h2>
     <h2 v-if="auth.user.role === 'USER'">Your Tickets</h2>
 
