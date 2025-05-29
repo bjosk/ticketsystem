@@ -47,7 +47,7 @@
 
     <div v-if="error" class="alert alert-danger">{{ error }}</div>
 
-    <table class="table table-striped table-hover border" v-if="tickets">
+    <table id="listOfTickets" class="table table-striped table-hover border" v-if="tickets">
       <thead class="table-dark">
         <tr>
           <th scope="col">ID</th>
@@ -59,8 +59,8 @@
         </tr>
       </thead>
       <tbody class="table-group-divider">
-        <tr v-for="ticket in tickets" class="position-relative" @click.prevent="redirectToTicket(ticket.ticketId)" :key="ticket.ticketId">
-          <td><a class="stretched-link text-decoration-none text-reset">{{ ticket.ticketId }}</a></td>
+        <tr v-for="ticket in tickets" class="position-relative cursor-pointer" @click.prevent="redirectToTicket(ticket.ticketId)" :key="ticket.ticketId">
+          <td>{{ ticket.ticketId }}</td>
           <td>{{ ticket.shortDescription }}</td>
           <td>{{ ticket.createdAt.slice(0, 10) }}</td>
           <td>{{ ticket.submittedByUsername }}</td>
