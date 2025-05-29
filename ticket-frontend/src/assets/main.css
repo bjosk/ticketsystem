@@ -17,3 +17,7 @@
 .color-accent {
   background-color: #B6B09F !important;
 }
+
+textarea {
+  min-height: 150px !important;
+}

@@ -40,11 +40,11 @@ const formattedDate = computed(() => {
   <AppNavBar />
     <div class="container mt-4">
       <form>
-        <table class="table table-borderless">
+        <table class="table table-borderless mb-3">
           <tbody>
           <tr class="align-middle">
-            <th><label for="ticketId">ID</label></th>
-            <td>
+            <th class="pe-0"><label for="ticketId" class="input-group-text fw-bold">ID</label></th>
+            <td class="ps-0">
               <input
                 v-model="ticket.ticketId"
                 type="number"
@@ -53,8 +53,8 @@ const formattedDate = computed(() => {
                 disabled
               />
             </td>
-            <th><label for="username">Username</label></th>
-            <td>
+            <th class="pe-0"><label for="username" class="input-group-text fw-bold">Username</label></th>
+            <td class="ps-0">
               <input
                 v-model="ticket.submittedByUsername"
                 type="text"
@@ -63,8 +63,8 @@ const formattedDate = computed(() => {
                 disabled
               />
             </td>
-            <th><label for="createdAt">Created At</label></th>
-            <td>
+            <th class="pe-0"><label for="createdAt" class="input-group-text fw-bold">Created At</label></th>
+            <td class="ps-0">
               <input
                 :value="formattedDate"
                 type="text"
@@ -75,8 +75,8 @@ const formattedDate = computed(() => {
             </td>
           </tr>
           <tr class="align-middle">
-            <th><label for="status">Status</label></th>
-            <td>
+            <th class="pe-0"><label for="status" class="input-group-text fw-bold">Status</label></th>
+            <td class="ps-0">
               <input
                 v-model="ticket.ticketStatus"
                 type="text"
@@ -85,8 +85,8 @@ const formattedDate = computed(() => {
                 disabled
               />
             </td>
-            <th><label for="assignedTo">Assigned To</label></th>
-            <td>
+            <th class="pe-0"><label for="assignedTo" class="input-group-text fw-bold">Assigned To</label></th>
+            <td class="ps-0">
               <input
                 v-model="ticket.assignedToUsername"
                 type="text"
@@ -98,7 +98,7 @@ const formattedDate = computed(() => {
           </tr>
           </tbody>
         </table>
-        <div>
+        <div class="container mb-3">
           <label for="shortDescription" class="form-label fw-bold">Short description</label>
           <input v-model="ticket.shortDescription"
                  type="text"
@@ -107,13 +107,13 @@ const formattedDate = computed(() => {
                  disabled
           />
         </div>
-        <div>
+        <div class="container mb-3">
           <label for="description" class="form-label fw-bold">Description</label>
-          <input v-model="ticket.description"
+          <textarea v-model="ticket.description"
                  type="text"
                  id="description"
                  class="form-control"
-                 disabled
+                    disabled
           />
         </div>
       </form>
