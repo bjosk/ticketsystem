@@ -3,10 +3,20 @@
   import { useAuthStore } from "@/stores/auth.js";
   import axios from '@/services/axios';
   import { ref, onMounted } from 'vue'
+  import router from "@/router/index.js";
 
   const auth = useAuthStore();
   const tickets = ref([]);
   const error = ref(null);
+
+  const redirectToTicket = async (ticketId) => {
+    try {
+      await router.push(`/ticket/${ticketId}`);
+    } catch (err){
+      error.value = 'Could not redirect to /tickets.'
+      console.log(err);
+    }
+  }
 
 
   onMounted(async () => {
@@ -49,8 +59,8 @@
         </tr>
       </thead>
       <tbody class="table-group-divider">
-        <tr v-for="ticket in tickets" class="position-relative">
-          <td><a href="https://www.vg.no" class="stretched-link text-decoration-none text-reset">{{ ticket.ticketId }}</a></td>
+        <tr v-for="ticket in tickets" class="position-relative" @click.prevent="redirectToTicket(ticket.ticketId)" :key="ticket.ticketId">
+          <td><a class="stretched-link text-decoration-none text-reset">{{ ticket.ticketId }}</a></td>
           <td>{{ ticket.shortDescription }}</td>
           <td>{{ ticket.createdAt.slice(0, 10) }}</td>
           <td>{{ ticket.submittedByUsername }}</td>
