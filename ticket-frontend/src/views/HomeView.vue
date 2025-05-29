@@ -11,7 +11,15 @@
 
   onMounted(async () => {
     try {
-      const response = await axios.get(`/users/${auth.user.userId}/tickets`)
+
+      let response = '';
+
+      if (auth.user.role === 'AGENT') {
+        response = await axios.get("/tickets");
+      } else {
+        response = await axios.get(`/users/${auth.user.userId}/tickets`)
+      }
+
       tickets.value = response.data
     } catch (err) {
       console.error(err)
@@ -24,23 +32,10 @@
 <template>
     <AppNavBar />
   <div class="container mt-4">
-    <h2>Your Tickets</h2>
+    <h2 v-if="auth.user.role === 'AGENT'">All Tickets</h2>
+    <h2 v-if="auth.user.role === 'USER'">Your Tickets</h2>
 
     <div v-if="error" class="alert alert-danger">{{ error }}</div>
-
-<!--    <ul class="list-group" v-if="tickets.length">-->
-<!--      <li v-for="ticket in tickets" :key="ticket.ticketId" class="list-group-item">-->
-<!--        <div class="d-flex justify-content-between">-->
-<!--          <h5 class="mb-1">{{ ticket.shortDescription }}</h5>-->
-<!--          <span class="badge bg-secondary">{{ ticket.ticketStatus }}</span>-->
-<!--        </div>-->
-<!--        <div class="d-flex justify-content-between text-muted">-->
-<!--          <small>Created: {{ new Date(ticket.createdAt).toLocaleString() }}</small>-->
-<!--          <small>Submitted by: {{ ticket.submittedByUsername }}</small>-->
-<!--          <small>Assigned to: {{ ticket.assignedToUsername || 'Unassigned' }}</small>-->
-<!--        </div>-->
-<!--      </li>-->
-<!--    </ul>-->
 
     <table class="table table-striped table-hover border" v-if="tickets">
       <thead class="table-dark">
