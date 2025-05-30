@@ -21,3 +21,7 @@
 textarea {
   min-height: 150px !important;
 }
+
+.table-bg {
+  --bs-table-bg: #f8f9fa !important;
+}
