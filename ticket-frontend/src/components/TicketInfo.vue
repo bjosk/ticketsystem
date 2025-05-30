@@ -139,16 +139,19 @@ onMounted( async () => {
       </div>
     </form>
 
-    <div v-if="comments.length === 0" class="list-group p-2 pb-4">
-      <h6 class="h6 fw-bold">Comments:</h6>
-      <p>No comments yet!</p>
-    </div>
-
-    <div v-if="comments.length !== 0" class="list-group p-2 pb-4">
-      <h6 class="h6 fw-bold">Comments:</h6>
-      <div v-for="comment in formattedComments" class="list-group-item">
-        <small>{{ comment.createdAtFormatted}} - {{ comment.authorUsername }} commented:</small>
-        <p class="mb-0">{{ comment.text }}</p>
+    <div class="container p-2">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h6 class="h6 fw-bold mb-0">Comments:</h6>
+        <button class="btn btn-success">New Comment</button>
+      </div>
+      <div v-if="comments.length === 0" class="list-group pb-4">
+        <p>No comments yet!</p>
+      </div>
+      <div v-if="comments.length !== 0" class="list-group pb-4">
+        <div v-for="comment in formattedComments" class="list-group-item">
+          <small>{{ comment.createdAtFormatted}} - {{ comment.authorUsername }} commented:</small>
+          <p class="mb-0">{{ comment.text }}</p>
+        </div>
       </div>
     </div>
 

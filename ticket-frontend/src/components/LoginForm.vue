@@ -29,7 +29,7 @@ const submit = async () => {
 
 <template>
   <form @submit.prevent="submit" class="p-4 border rounded bg-white shadow-sm w-50">
-    <h2 class="mb-3 text-center">Login Test</h2>
+    <h2 class="mb-3 text-center">Login</h2>
 
     <div class="mb-3">
       <label for="username" class="form-label">Username</label>
