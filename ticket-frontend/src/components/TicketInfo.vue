@@ -5,12 +5,22 @@ import { useRoute } from "vue-router";
 import { ref, onMounted } from 'vue'
 import axios from '@/services/axios';
 import {computed} from "vue";
+import NewComment from "@/components/NewComment.vue";
 
 const route = useRoute();
 const ticketId = route.params.id;
 const ticket = ref({})
 const comments = ref([])
 const error = ref(null)
+
+const fetchComments = async () => {
+  try {
+    const response = await axios.get(`/tickets/${ticketId}/comments`);
+    comments.value = response.data;
+  } catch (err) {
+    console.error('Failed to fetch comments:', err);
+  }
+};
 
 // Formatted date for the ticket and reverses the order so that newest tickets are first.
 const formattedDate = computed(() => {
@@ -46,11 +56,7 @@ onMounted( async () => {
     const ticketResponse = await axios.get(`/tickets/${ticketId}`);
     ticket.value = ticketResponse.data;
 
-    const commentsResponse = await axios.get(`/tickets/${ticketId}/comments`);
-    comments.value = commentsResponse.data;
-
-    console.log(ticket.value)
-    console.log(commentsResponse.data)
+    await fetchComments();
   } catch (err) {
     console.log(err);
   }
@@ -142,7 +148,8 @@ onMounted( async () => {
     <div class="container p-2">
       <div class="d-flex justify-content-between align-items-center mb-2">
         <h6 class="h6 fw-bold mb-0">Comments:</h6>
-        <button class="btn btn-success">New Comment</button>
+        <NewComment :ticket-id="ticketId" @commentAdded="fetchComments"/>
+<!--        <button class="btn btn-success">New Comment</button>-->
       </div>
       <div v-if="comments.length === 0" class="list-group pb-4">
         <p>No comments yet!</p>
