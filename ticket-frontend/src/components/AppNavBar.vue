@@ -28,7 +28,7 @@ const logout = () => {
         </li>
       </ul>
       <div class="nav-item me-2 d-flex align-items-center">
-        <p class="nav-item me-2 mb-0">{{ auth.user.username }}</p>
+        <p class="nav-item me-2 mb-0">{{ auth.user?.username }}</p>
         <button class="btn btn-outline-danger me-2" @click="logout">Logout</button>
       </div>
 

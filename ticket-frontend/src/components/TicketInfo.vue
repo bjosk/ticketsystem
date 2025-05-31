@@ -6,7 +6,9 @@ import { ref, onMounted } from 'vue'
 import axios from '@/services/axios';
 import {computed} from "vue";
 import NewComment from "@/components/NewComment.vue";
+import {useAuthStore} from "@/stores/auth.js";
 
+const auth = useAuthStore();
 const route = useRoute();
 const ticketId = route.params.id;
 const ticket = ref({})
@@ -60,6 +62,8 @@ onMounted( async () => {
   } catch (err) {
     console.log(err);
   }
+
+  console.log(ticket.value)
 })
 </script>
 
@@ -109,7 +113,7 @@ onMounted( async () => {
               type="text"
               id="status"
               class="form-control"
-              disabled
+              :disabled="auth.user?.role !== 'AGENT'"
             />
           </td>
           <th class="pe-0"><label for="assignedTo" class="input-group-text fw-bold">Assigned To</label></th>
@@ -119,7 +123,7 @@ onMounted( async () => {
               type="text"
               id="assignedTo"
               class="form-control"
-              disabled
+              :disabled="auth.user?.role !== 'AGENT'"
             />
           </td>
         </tr>
