@@ -12,7 +12,7 @@ public class Comment {
     @Id
     @GeneratedValue
     private Long id;
-
+    @Lob
     private String text;
 
     private LocalDateTime createdAt;
