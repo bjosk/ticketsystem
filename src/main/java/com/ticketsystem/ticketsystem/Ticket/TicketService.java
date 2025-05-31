@@ -20,6 +20,10 @@ public class TicketService{
     @Autowired
     private UserRepository userRepository;
 
+    public TicketStatus[] getTicketStatuses() {
+        return TicketStatus.values();
+    }
+
     public List<CommentResponse> getCommentsForTicket(Long ticketId) {
         Ticket ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket with ID " + ticketId + " not found"));

@@ -13,6 +13,11 @@ public class TicketController {
     @Autowired
     private TicketService ticketService;
 
+    @GetMapping("/statuses")
+    public TicketStatus[] getTicketStatuses() {
+        return ticketService.getTicketStatuses();
+    }
+
     @GetMapping("/{ticketId}/comments")
     public List<CommentResponse> getCommentsForTicket(@PathVariable Long ticketId) {
         return ticketService.getCommentsForTicket(ticketId);

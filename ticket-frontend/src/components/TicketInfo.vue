@@ -14,6 +14,17 @@ const ticketId = route.params.id;
 const ticket = ref({})
 const comments = ref([])
 const error = ref(null)
+const availableStatuses = ref([]);
+
+//Fetches the TicketStatus enum
+const fetchAvailableTicketStatuses = async () => {
+  try {
+    const response = await axios.get('/tickets/statuses');
+    availableStatuses.value = response.data;
+  } catch (err) {
+    console.error("Failed to load statuses:", err);
+  }
+}
 
 const fetchComments = async () => {
   try {
@@ -59,6 +70,8 @@ onMounted( async () => {
     ticket.value = ticketResponse.data;
 
     await fetchComments();
+    await fetchAvailableTicketStatuses();
+    console.log(availableStatuses.value)
   } catch (err) {
     console.log(err);
   }
@@ -108,13 +121,16 @@ onMounted( async () => {
         <tr class="align-middle">
           <th class="pe-0"><label for="status" class="input-group-text fw-bold">Status</label></th>
           <td class="ps-0">
-            <input
+            <select
               v-model="ticket.ticketStatus"
-              type="text"
               id="status"
-              class="form-control"
+              class="form-select"
               :disabled="auth.user?.role !== 'AGENT'"
-            />
+            >
+              <option v-for="status in availableStatuses" :key="status" :value="status">
+                {{ status }}
+              </option>
+            </select>
           </td>
           <th class="pe-0"><label for="assignedTo" class="input-group-text fw-bold">Assigned To</label></th>
           <td class="ps-0">
