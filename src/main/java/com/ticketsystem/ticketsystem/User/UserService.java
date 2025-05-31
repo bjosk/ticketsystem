@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -18,6 +20,23 @@ public class UserService {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    public List<UserResponse> searchAgentAndAdminUsers(String query) {
+        List<User> users = userRepository.findUsersByUsernameContainsIgnoreCaseAndRoleIsNot(query, Role.USER);
+
+        return users.stream()
+                .map(user -> new UserResponse(
+                        user.getId(),
+                        user.getUsername(),
+                        user.getEmail(),
+                        user.getRole().name(),
+                        user.getSubmittedTickets()
+                                .stream()
+                                .map(Ticket::getTicketId)
+                                .toList()
+                ))
+                .toList();
+    }
 
     public UserResponse createUser(UserRequest request) {
         if (userRepository.existsByUsername(request.username())) {

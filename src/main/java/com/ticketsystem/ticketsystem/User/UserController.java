@@ -13,6 +13,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping("/search")
+    public List<UserResponse> searchUsers(@RequestParam String usernameQuery) {
+        return userService.searchAgentAndAdminUsers(usernameQuery);
+    }
+
     // Create a new user (register)
     @PostMapping
     public UserResponse createUser(@RequestBody UserRequest request) {
