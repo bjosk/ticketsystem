@@ -54,11 +54,12 @@ watch(search, async (usernameQuery) => {
 </script>
 
 <template>
-  <div class="modal fade show d-block" tabindex="-1" role="dialog" v-if="show" style="background: rgba(0, 0, 0, 0.5)">
+  <div class="modal d-block" tabindex="-1" v-if="show" style="background: rgba(0, 0, 0, 0.5)">
     <div class="modal-dialog modal-dialog-scrollable">
       <div class="modal-content">
         <div class="modal-header">
           <h5 class="modal-title">Search and assign user</h5>
+<!--          Emits a close event to TicketInfo when clicked-->
           <button type="button" class="btn-close" @click="$emit('close')"></button>
         </div>
         <div class="modal-body">
@@ -69,7 +70,6 @@ watch(search, async (usernameQuery) => {
               :key="user.userId"
               class="list-group-item list-group-item-action"
               @click="selectUser(user)"
-              role="button"
             >
               <strong>{{ user.username }}</strong><br />
               <small>{{ user.email }} — {{ user.role }}</small>
