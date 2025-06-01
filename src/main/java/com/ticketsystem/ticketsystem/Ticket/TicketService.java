@@ -100,8 +100,8 @@ public class TicketService{
 
     // Create a new ticket submitted by a user
     public TicketResponse createTicket(TicketRequest request) {
-        User user = userRepository.findById(request.userId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with ID " + request.userId() + " not found"));
+        User user = userRepository.findByUsername(request.username())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with ID " + request.username() + " not found"));
 
         Ticket ticket = new Ticket();
         ticket.setShortDescription(request.shortDescription());
