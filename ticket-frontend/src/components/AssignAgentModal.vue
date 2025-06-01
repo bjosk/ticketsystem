@@ -36,11 +36,6 @@ watch(() => props.show, async (isOpen) => {
 
 //Watches if the search query changes and updates the found users
 watch(search, async (usernameQuery) => {
-  if (usernameQuery.length < 1) {
-    users.value = []
-    return
-  }
-
   try {
     const res = await axios.get('/users/searchAgentAndAdmin', {
       params: { usernameQuery }

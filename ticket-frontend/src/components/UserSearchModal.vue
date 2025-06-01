@@ -25,11 +25,6 @@ watch(() => props.show, async (isOpen) => {
 })
 
 watch(search, async (usernameQuery) => {
-  if (usernameQuery.length < 1) {
-    users.value = []
-    return
-  }
-
   try {
     const res = await axios.get('/users/searchAllUsers', {
       params: { usernameQuery }
@@ -42,8 +37,8 @@ watch(search, async (usernameQuery) => {
 
 const selectUser = (user) => {
   emit('user-selected', user)
-  emit('close')
   search.value = ''
+  emit('close')
 }
 </script>
 
