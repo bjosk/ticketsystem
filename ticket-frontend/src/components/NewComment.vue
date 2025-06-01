@@ -41,7 +41,7 @@ const newCommentText = ref('');
           data-bs-toggle="modal"
           data-bs-target="#newCommentModal">New Comment</button>
 
-  <div class="modal fade" id="newCommentModal" tabindex="-1" aria-labelledby="newCommentModal">
+  <div class="modal" id="newCommentModal" tabindex="-1" aria-labelledby="newCommentModal">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
