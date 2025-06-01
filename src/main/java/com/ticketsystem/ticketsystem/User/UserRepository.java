@@ -11,4 +11,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
     Boolean existsByEmail(String email);
     Boolean existsUsersById(Long id);
     List<User> findUsersByUsernameContainsIgnoreCaseAndRoleIsNot(String username, Role role);
+    List<User> findUsersByUsernameContainsIgnoreCase(String username);
 }

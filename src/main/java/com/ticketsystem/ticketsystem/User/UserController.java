@@ -13,9 +13,16 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/search")
-    public List<UserResponse> searchUsers(@RequestParam String usernameQuery) {
+    //Searches for agent and admin users
+    @GetMapping("/searchAgentAndAdmin")
+    public List<UserResponse> searchAgentAndAdminUsers(@RequestParam String usernameQuery) {
         return userService.searchAgentAndAdminUsers(usernameQuery);
+    }
+
+    //Searches for regular users
+    @GetMapping("/searchAllUsers")
+    public List<UserResponse> searchAllUsers(@RequestParam String usernameQuery) {
+        return userService.searchAllUsers(usernameQuery);
     }
 
     // Create a new user (register)

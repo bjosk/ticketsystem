@@ -24,7 +24,7 @@ const selectUser = (user) => {
 watch(() => props.show, async (isOpen) => {
   if (isOpen) {
     try {
-      const res = await axios.get('/users/search', {
+      const res = await axios.get('/users/searchAgentAndAdmin', {
         params: { usernameQuery: '' } // empty query = fetch all
       })
       users.value = res.data
