@@ -13,6 +13,12 @@ public class TicketController {
     @Autowired
     private TicketService ticketService;
 
+    @PutMapping("/{id}")
+    public void updateTicket(@PathVariable Long id, @RequestBody TicketUpdateRequest request) {
+        ticketService.updateTicket(id, request);
+    }
+
+
     @GetMapping("/statuses")
     public TicketStatus[] getTicketStatuses() {
         return ticketService.getTicketStatuses();

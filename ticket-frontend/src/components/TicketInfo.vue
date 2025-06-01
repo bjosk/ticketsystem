@@ -18,6 +18,23 @@ const error = ref(null)
 const availableStatuses = ref([]);
 const showAgentModal = ref(false)
 
+const updateTicket = async () => {
+  try {
+    const payload = {
+      ticketStatus: ticket.value.ticketStatus,
+      assignedTo: ticket.value.assignedToUsername,
+      shortDescription: ticket.value.shortDescription,
+      description: ticket.value.description
+    }
+
+    await axios.put(`/tickets/${ticketId}`, payload)
+    console.log('Ticket updated successfully.')
+  } catch (err) {
+    console.error('Failed to update ticket:', err)
+  }
+}
+
+
 //Opens up the search modal for assigning an agent to a ticket
 const openUserSearchModal = () => {
   if (auth.user?.role !== 'AGENT') return
@@ -75,8 +92,6 @@ const formattedComments = computed(() =>
     })
   })).reverse()
 );
-
-
 
 onMounted( async () => {
   try {
@@ -156,9 +171,18 @@ onMounted( async () => {
               readonly
               :disabled="auth.user?.role === 'USER'"
               @click.prevent="openUserSearchModal"
-              placeholder="Click to assign user"
+              placeholder="Unassigned"
             />
           </td>
+          <th>
+            <button
+              @click.prevent="updateTicket"
+              class="btn btn-success"
+              v-if="auth.user?.role !== 'USER'"
+            >
+              Save changes
+            </button>
+          </th>
         </tr>
         </tbody>
       </table>
@@ -168,7 +192,7 @@ onMounted( async () => {
                type="text"
                id="shortDescription"
                class="form-control"
-               disabled
+               :disabled="auth.user?.role !== 'AGENT'"
         />
       </div>
       <div class="container mb-3 p-2">
@@ -177,7 +201,7 @@ onMounted( async () => {
                   type="text"
                   id="description"
                   class="form-control"
-                  disabled
+                  :disabled="auth.user?.role !== 'AGENT'"
         />
       </div>
     </form>

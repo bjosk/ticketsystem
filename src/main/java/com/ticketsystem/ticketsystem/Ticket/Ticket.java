@@ -12,7 +12,9 @@ public class Ticket {
     @Id
     @GeneratedValue
     private Long ticketId;
+    @Lob
     private String shortDescription;
+    @Lob
     private String description;
     @Enumerated(EnumType.STRING)
     private TicketStatus ticketStatus;

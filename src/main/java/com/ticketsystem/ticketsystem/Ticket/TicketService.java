@@ -20,6 +20,32 @@ public class TicketService{
     @Autowired
     private UserRepository userRepository;
 
+    public void updateTicket(Long ticketId, TicketUpdateRequest request) {
+        Ticket ticket = ticketRepository.findById(ticketId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket not found"));
+
+        if (request.ticketStatus() != null) {
+            ticket.setTicketStatus(TicketStatus.valueOf(request.ticketStatus()));
+        }
+
+        if (request.assignedTo() != null) {
+            User assignedUser = userRepository.findByUsername(request.assignedTo())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Assigned user not found"));
+            ticket.setAssignedTo(assignedUser);
+        }
+
+        if (request.shortDescription() != null) {
+            ticket.setShortDescription(request.shortDescription());
+        }
+
+        if (request.description() != null) {
+            ticket.setDescription(request.description());
+        }
+
+        ticketRepository.save(ticket);
+    }
+
+
     public TicketStatus[] getTicketStatuses() {
         return TicketStatus.values();
     }
