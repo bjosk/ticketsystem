@@ -24,7 +24,7 @@ const logout = () => {
           <router-link class="nav-link" to="/home">Home</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/raise-ticket">Raise Ticket</router-link>
+          <router-link class="nav-link" to="/ticket/new">Raise Ticket</router-link>
         </li>
       </ul>
       <div class="nav-item me-2 d-flex align-items-center">

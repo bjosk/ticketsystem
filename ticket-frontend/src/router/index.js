@@ -3,6 +3,7 @@ import LoginView from '../views/LoginView.vue'
 import HomeView from "@/views/HomeView.vue";
 import { useAuthStore } from "@/stores/auth.js";
 import TicketView from "@/views/TicketView.vue";
+import RaiseTicketView from "@/views/RaiseTicketView.vue";
 
 const routes = [
   {
@@ -20,6 +21,12 @@ const routes = [
     path: '/ticket/:id',
     name: 'ticket',
     component: TicketView,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/ticket/new',
+    name: 'newTicket',
+    component: RaiseTicketView,
     meta: { requiresAuth: true }
   }
 ]
