@@ -4,7 +4,9 @@ import { ref } from 'vue'
 import { useAuthStore } from "@/stores/auth.js";
 import UserSearchModal from "@/components/UserSearchModal.vue"
 import axios from '@/services/axios'
+import { useRouter } from "vue-router"
 
+const router = useRouter()
 const auth = useAuthStore()
 const showModal = ref(false)
 const selectedUser = ref({
@@ -14,6 +16,7 @@ const selectedUser = ref({
 })
 const shortDescription = ref('')
 const description = ref('')
+const showSuccessAlert = ref(false)
 
 const handleUserSelect = (user) => {
   selectedUser.value = user
@@ -35,9 +38,14 @@ const submitTicket = async () => {
   }
 
   try {
-    await axios.post('/tickets', payload)
-    alert('Ticket created successfully.')
-    // Optionally reset form here
+    const response = await axios.post('/tickets', payload)
+    const newTicket = response.data
+
+    showSuccessAlert.value = true
+    setTimeout(() => {
+      showSuccessAlert.value = false
+      router.push(`/ticket/${newTicket.ticketId}`) // Navigate to the ticket page
+    }, 500)
   } catch (err) {
     console.error('Failed to create ticket:', err)
     alert('Error creating ticket.')
@@ -47,6 +55,10 @@ const submitTicket = async () => {
 
 <template>
   <AppNavBar />
+  <div v-if="showSuccessAlert" class="alert alert-success alert-dismissible fade show" role="alert">
+    Ticket updated successfully.
+    <button type="button" class="btn-close" @click="showSuccessAlert = false" aria-label="Close"></button>
+  </div>
   <div class="container bg-body-tertiary mt-4 pt-2 pb-2">
     <div v-if="auth.user?.role !== 'USER'" class="container p-2">
       <label for="userSearch" class="form-label fw-bold">Select User</label>
