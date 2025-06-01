@@ -179,6 +179,7 @@ onMounted( async () => {
               type="text"
               id="assignedTo"
               class="form-control"
+              autocomplete="off"
               readonly
               :disabled="auth.user?.role === 'USER'"
               @click.prevent="openUserSearchModal"

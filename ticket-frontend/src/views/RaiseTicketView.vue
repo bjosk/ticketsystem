@@ -67,6 +67,8 @@ const submitTicket = async () => {
         class="form-control"
         type="text"
         placeholder="Click to select a user"
+        autocomplete="off"
+        readonly
         :value="selectedUser?.username"
         @click="showModal = true"
       />
