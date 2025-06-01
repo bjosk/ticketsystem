@@ -17,6 +17,7 @@ const comments = ref([])
 const error = ref(null)
 const availableStatuses = ref([]);
 const showAgentModal = ref(false)
+const showSuccessAlert = ref(false)
 
 const updateTicket = async () => {
   try {
@@ -28,6 +29,11 @@ const updateTicket = async () => {
     }
 
     await axios.put(`/tickets/${ticketId}`, payload)
+
+    showSuccessAlert.value = true
+    setTimeout(() => {
+      showSuccessAlert.value = false
+    }, 3000)
     console.log('Ticket updated successfully.')
   } catch (err) {
     console.error('Failed to update ticket:', err)
@@ -111,6 +117,11 @@ onMounted( async () => {
 
 <template>
   <AppNavBar />
+  <div v-if="showSuccessAlert" class="alert alert-success alert-dismissible fade show" role="alert">
+    Ticket updated successfully.
+    <button type="button" class="btn-close" @click="showSuccessAlert = false" aria-label="Close"></button>
+  </div>
+
   <div class="container mt-4 mb-4 bg-body-tertiary rounded">
     <form class="pt-3 pe-3">
       <table class="table table-borderless mb-3 table-bg">
@@ -233,6 +244,5 @@ onMounted( async () => {
     @close="showAgentModal = false"
     @user-selected="handleUserSelected"
   />
-
 
 </template>
