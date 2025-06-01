@@ -7,6 +7,7 @@ import axios from '@/services/axios';
 import {computed} from "vue";
 import NewComment from "@/components/NewComment.vue";
 import {useAuthStore} from "@/stores/auth.js";
+import AssignAgentModal from '@/components/AssignAgentModal.vue'
 
 const auth = useAuthStore();
 const route = useRoute();
@@ -15,6 +16,19 @@ const ticket = ref({})
 const comments = ref([])
 const error = ref(null)
 const availableStatuses = ref([]);
+const showAgentModal = ref(false)
+
+//Opens up the search modal for assigning an agent to a ticket
+const openUserSearchModal = () => {
+  if (auth.user?.role !== 'AGENT') return
+  showAgentModal.value = true
+}
+
+//After user is selected the username of the selected user is set to the assignedToUsername field of the ticket
+const handleUserSelected = (user) => {
+  ticket.value.assignedToUsername = user.username
+  console.log(ticket.value)
+}
 
 //Fetches the TicketStatus enum
 const fetchAvailableTicketStatuses = async () => {
@@ -139,7 +153,10 @@ onMounted( async () => {
               type="text"
               id="assignedTo"
               class="form-control"
-              :disabled="auth.user?.role !== 'AGENT'"
+              readonly
+              :disabled="auth.user?.role === 'USER'"
+              @click.prevent="openUserSearchModal"
+              placeholder="Click to assign user"
             />
           </td>
         </tr>
@@ -184,5 +201,14 @@ onMounted( async () => {
 
 
   </div>
+
+<!--  ShowAgentModel value is passed to AssignAgentModal as a prop.-->
+<!--  AssignAgentModal is emitting two event when a user is clicked which closes the modal and assigns the user.-->
+  <AssignAgentModal
+    :show="showAgentModal"
+    @close="showAgentModal = false"
+    @user-selected="handleUserSelected"
+  />
+
 
 </template>
