@@ -1,6 +1,8 @@
 <script setup>
 import { ref, watch } from 'vue'
 import axios from '@/services/axios'
+import debounce from 'lodash/debounce'
+
 
 const props = defineProps({
   show: Boolean
@@ -18,22 +20,24 @@ watch(() => props.show, async (isOpen) => {
         params: { usernameQuery: '' }
       })
       users.value = res.data
+      console.log("called api")
     } catch (err) {
       console.error('Initial fetch failed:', err)
     }
   }
 })
 
-watch(search, async (usernameQuery) => {
+watch(search, debounce(async (usernameQuery) => {
   try {
     const res = await axios.get('/users/searchAllUsers', {
       params: { usernameQuery }
     })
     users.value = res.data
+    console.log("called api")
   } catch (err) {
     console.error('Search failed:', err)
   }
-})
+}, 1000))
 
 const selectUser = (user) => {
   emit('user-selected', user)

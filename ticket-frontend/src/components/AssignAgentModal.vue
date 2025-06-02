@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch } from 'vue'
 import axios from '@/services/axios'
+import debounce from 'lodash/debounce'
 
 //Prop received for TicketInfo
 const props = defineProps({
@@ -35,16 +36,17 @@ watch(() => props.show, async (isOpen) => {
 })
 
 //Watches if the search query changes and updates the found users
-watch(search, async (usernameQuery) => {
+watch(search, debounce(async (usernameQuery) => {
   try {
     const res = await axios.get('/users/searchAgentAndAdmin', {
       params: { usernameQuery }
     })
     users.value = res.data
+    console.log("called api")
   } catch (err) {
     console.error('Search failed:', err)
   }
-})
+},1000))
 
 </script>
 
