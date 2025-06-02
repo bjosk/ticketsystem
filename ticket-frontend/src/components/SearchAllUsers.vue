@@ -1,3 +1,7 @@
+<!--This component emits update:modelValue, user-selected, and close.-->
+<!--It also takes a required prop 'show' and some additional optional props.-->
+<!--Parent needs to feed component with prop and receives the emitted values.-->
+
 <script setup>
 import { ref, watch, onMounted } from 'vue'
 import axios from '@/services/axios'
