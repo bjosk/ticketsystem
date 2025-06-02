@@ -4,6 +4,7 @@ import HomeView from "@/views/HomeView.vue";
 import { useAuthStore } from "@/stores/auth.js";
 import TicketView from "@/views/TicketView.vue";
 import RaiseTicketView from "@/views/RaiseTicketView.vue";
+import ModifyUser from "@/views/ModifyUser.vue";
 
 const routes = [
   {
@@ -27,6 +28,12 @@ const routes = [
     path: '/ticket/new',
     name: 'newTicket',
     component: RaiseTicketView,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/users/modify',
+    name: 'modifyUsers',
+    component: ModifyUser,
     meta: { requiresAuth: true }
   }
 ]

@@ -26,6 +26,9 @@ const logout = () => {
         <li class="nav-item">
           <router-link class="nav-link" to="/ticket/new">Raise Ticket</router-link>
         </li>
+        <li v-if="auth.user?.role !== 'USER'" class="nav-item">
+          <router-link class="nav-link" to="/users/modify">Modify user</router-link>
+        </li>
       </ul>
       <div class="nav-item me-2 d-flex align-items-center">
         <p class="nav-item me-2 mb-0">{{ auth.user?.username }}</p>
