@@ -28,6 +28,7 @@ const handleUserSelected = (user) => {
   </div>
 
   <SearchAllUsers
+    :fetchAgentAndAdminOnly="false"
     :show="searchModalOpen"
     v-model="selectedUsername"
     @user-selected="handleUserSelected"

@@ -9,6 +9,7 @@
     - label (String): Title shown in the modal header.
     - placeholder (String): Placeholder text for the search input.
     - fetchUsers (Boolean): Whether to fetch users from the backend API on mount.
+    - fetchAgentAndAdminOnly (Boolean): Whether to fetch only users of type AGENT or ADMIN
 
   Emits:
     - update:modelValue: Emits the selected user's `username` (supports v-model).
@@ -22,7 +23,7 @@ import axios from '@/services/axios'
 
 // Props passed from parent
 const props = defineProps({
-  show: Boolean, // Modal visibility
+  show: Boolean,
   users: {
     type: Array,
     default: () => []
@@ -38,8 +39,13 @@ const props = defineProps({
   fetchUsers: {
     type: Boolean,
     default: true
+  },
+  fetchAgentAndAdminOnly: {
+    type: Boolean,
+    default: false
   }
 })
+
 
 // Events emitted to parent
 const emit = defineEmits(['update:modelValue', 'user-selected', 'close'])
@@ -53,9 +59,11 @@ const filteredUsers = ref([])         // Filtered search results
 onMounted(async () => {
   if (props.fetchUsers) {
     try {
-      const res = await axios.get('/users/searchAllUsers', {
-        params: { usernameQuery: '' }
-      })
+      const endpoint = props.fetchAgentAndAdminOnly
+        ? '/users/searchAgentAndAdmin'
+        : '/users/searchAllUsers'
+
+      const res = await axios.get(endpoint, { params: { usernameQuery: '' } })
       internalUsers.value = res.data
     } catch (err) {
       console.error('Failed to load users:', err)
@@ -67,6 +75,7 @@ onMounted(async () => {
 
   filteredUsers.value = internalUsers.value
 })
+
 
 // Watch the search query and update filtered list
 watch(search, (query) => {
