@@ -24,7 +24,7 @@
 
       let response = '';
 
-      if (auth.user.role === 'AGENT') {
+      if (auth.user.role !== 'USER') {
         response = await axios.get("/tickets");
       } else {
         response = await axios.get(`/users/${auth.user.userId}/tickets`)
@@ -42,7 +42,7 @@
 <template>
     <AppNavBar />
   <div class="container mt-4 mb-4 p-3 bg-body-tertiary rounded">
-    <h2 v-if="auth.user?.role === 'AGENT'">All Tickets</h2>
+    <h2 v-if="auth.user?.role !== 'USER'">All Tickets</h2>
     <h2 v-if="auth.user?.role === 'USER'">Your Tickets</h2>
 
     <div v-if="error" class="alert alert-danger">{{ error }}</div>
