@@ -77,6 +77,7 @@ const submitTicket = async () => {
   </div>
 
   <div class="container bg-body-tertiary mt-4 pt-2 pb-2">
+    <h2>Raise a ticket</h2>
     <!-- USER SELECTION FIELD (only if role !== 'USER') -->
     <div v-if="auth.user?.role !== 'USER'" class="container p-2">
       <label for="userSearch" class="form-label fw-bold">Select User</label>

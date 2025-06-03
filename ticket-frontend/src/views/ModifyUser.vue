@@ -14,17 +14,20 @@ const handleUserSelected = (user) => {
 
 <template>
   <AppNavBar/>
-  <div class="container p-2">
-    <label class="form-label fw-bold">Select User</label>
-    <input
-      type="text"
-      class="form-control"
-      :value="selectedUsername"
-      readonly
-      @click="searchModalOpen = true"
-      placeholder="Click to select user"
-      autocomplete="off"
-    />
+  <div class="container bg-body-tertiary mt-4 pt-2 pb-2">
+    <h2>Modify user</h2>
+    <div class="container p-2">
+      <label class="form-label fw-bold">Select User</label>
+      <input
+        type="text"
+        class="form-control"
+        :value="selectedUsername"
+        readonly
+        @click="searchModalOpen = true"
+        placeholder="Click to select user"
+        autocomplete="off"
+      />
+    </div>
   </div>
 
   <SearchAllUsers
