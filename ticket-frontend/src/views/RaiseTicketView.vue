@@ -76,7 +76,7 @@ const submitTicket = async () => {
     ></button>
   </div>
 
-  <div class="container bg-body-tertiary mt-4 pt-2 pb-2">
+  <div class="container bg-body-tertiary mt-4 pt-2 pb-2 rounded">
     <h2>Raise a ticket</h2>
     <!-- USER SELECTION FIELD (only if role !== 'USER') -->
     <div v-if="auth.user?.role !== 'USER'" class="container p-2">
