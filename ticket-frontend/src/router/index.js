@@ -34,7 +34,7 @@ const routes = [
     path: '/users/modify',
     name: 'modifyUsers',
     component: ModifyUser,
-    meta: { requiresAuth: true }
+    meta: { requiresAuth: true, requiresRoles: ['AGENT', 'ADMIN'] }
   }
 ]
 
@@ -47,12 +47,22 @@ const router = createRouter({
 // ✅ Global navigation guard
 router.beforeEach((to, from, next) => {
   const auth = useAuthStore();
-
+  console.log(auth.getUserRole())
+  // Check authentication
   if (to.meta?.requiresAuth && !auth.isAuthenticated()) {
-    next('/login');
-  } else {
-    next();
+    return next('/login');
   }
+
+  // Check role-based access
+  if (to.meta?.requiresRoles) {
+    const userRole = auth.getUserRole(); // Ensure this method or value exists in your store
+    if (!to.meta.requiresRoles.includes(userRole)) {
+      return next('/home'); // Redirect unauthorized users
+    }
+  }
+
+  next();
 });
+
 
 export default router

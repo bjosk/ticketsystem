@@ -16,6 +16,9 @@ export const useAuthStore = defineStore('auth', {
     },
     isAuthenticated() {
       return !!this.user
+    },
+    getUserRole() {
+      return this.user?.role
     }
   }
 })
