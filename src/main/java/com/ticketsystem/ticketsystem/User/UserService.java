@@ -19,6 +19,25 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    public void updateUser(UserUpdateRequest userUpdateRequest) {
+        User user = userRepository.findByUsername(userUpdateRequest.selectedUsername())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
+        if (!userUpdateRequest.newUsername().isEmpty()) {
+            user.setUsername(userUpdateRequest.newUsername());
+        }
+
+        if (!userUpdateRequest.role().isEmpty()) {
+            user.setRole(Role.valueOf(userUpdateRequest.role()));
+        }
+
+        if (!userUpdateRequest.email().isEmpty()) {
+            user.setEmail(userUpdateRequest.email());
+        }
+
+        userRepository.save(user);
+    }
+
     public List<UserResponse> searchAgentAndAdminUsers(String query) {
         List<User> users = userRepository.findUsersByUsernameContainsIgnoreCaseAndRoleIsNot(query, Role.USER);
 

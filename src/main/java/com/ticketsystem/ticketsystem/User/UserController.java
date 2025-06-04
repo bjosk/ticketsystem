@@ -13,6 +13,11 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @PutMapping
+    public void updateUser(@RequestBody UserUpdateRequest userUpdateRequest) {
+        userService.updateUser(userUpdateRequest);
+    }
+
     //Searches for agent and admin users
     @GetMapping("/searchAgentAndAdmin")
     public List<UserResponse> searchAgentAndAdminUsers(@RequestParam String usernameQuery) {
