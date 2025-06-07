@@ -12,6 +12,36 @@ import java.util.List;
 public class EntityFactory {
 
     /**
+     * Creates a list of fake users.
+     * @param count how many users to generate
+     * @return a List<User> of size count
+     */
+    public static List<User> createUsers(int count) {
+        try {
+            List<User> list = new ArrayList<>(count);
+            Role[] roles = Role.values();
+            for (int i = 1; i <= count; i++) {
+                long id = i;
+                String username = "user" + i;
+                String email = "user" + i + "@example.com";
+                Role role = roles[i % roles.length];
+
+                // Build a long[] of ticket IDs
+                long[] tickets = (i % 3 == 0)
+                        ? new long[0]
+                        : new long[]{ 100L + i };
+
+                list.add(createUserWithTickets(id, username, email, role, tickets));
+            }
+            return list;
+        } catch (ReflectiveOperationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+
+    /**
      * Creates a User with the given id, username, email, role, and optionally a list of ticket IDs.
      */
     public static User createUserWithTickets(long userId,

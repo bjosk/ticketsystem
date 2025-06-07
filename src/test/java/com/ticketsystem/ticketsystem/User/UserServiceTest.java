@@ -29,6 +29,94 @@ class UserServiceTest {
     private UserService userService;
 
     @Test
+    void getAllUsers_ReturnsAllUsers() throws Exception {
+        List<User> fakeUsers = EntityFactory.createUsers(10);
+        when(userRepository.findAll()).thenReturn(fakeUsers);
+
+        List<UserResponse> userResponses = userService.getAllUsers();
+
+        assertNotNull(userResponses);
+        assertEquals(fakeUsers.size(), userResponses.size());
+
+        for (int i = 0; i < 10; i++) {
+            assertEquals(fakeUsers.get(i).getId(), userResponses.get(i).userId());
+            assertEquals(fakeUsers.get(i).getUsername(), userResponses.get(i).username());
+            assertEquals(fakeUsers.get(i).getEmail(), userResponses.get(i).email());
+            assertEquals(fakeUsers.get(i).getRole(), Role.valueOf(userResponses.get(i).role()));
+            assertEquals(fakeUsers.get(i).getSubmittedTickets().size(), userResponses.get(i).submittedTicketIds().size());
+            System.out.println(fakeUsers.get(i).getSubmittedTickets());
+        }
+
+        // Verify repository was called exactly once with correct arguments
+        verify(userRepository, times(1))
+                .findAll();
+    }
+
+    @Test
+    void searchAllUsers_returnsUsersWithAnyRole() throws Exception {
+        // Create fake users
+        User admin = EntityFactory.createUserWithTickets(1L, "adminUser", "admin@example.com", Role.ADMIN, 101L, 102L);
+        User agent = EntityFactory.createUserWithTickets(2L, "agentUser", "agent@example.com", Role.AGENT, 103L, 104L);
+        User regular = EntityFactory.createUserWithTickets(3L, "regularUser", "regular@example.com", Role.USER, 105L, 106L);
+
+        // The repository query should return users of any role. "us" is the search query
+        when(userRepository.findUsersByUsernameContainsIgnoreCase("us")).thenReturn(Arrays.asList(admin, agent, regular));
+
+        //Act
+        List<UserResponse> responses = userService.searchAllUsers("us");
+
+        // Verify three results
+        assertEquals(3, responses.size());
+
+        // Map responses by ID for easier assertions
+        Map<Long, UserResponse> map = new HashMap<>();
+        for (UserResponse ur : responses) {
+            map.put(ur.userId(), ur);
+        }
+
+        // Check ADMIN entry
+        UserResponse adminResp = map.get(1L);
+        assertNotNull(adminResp);
+        assertEquals("adminUser", adminResp.username());
+        assertEquals("admin@example.com", adminResp.email());
+        assertEquals(Role.ADMIN.name(), adminResp.role());
+        List<Long> adminTickets = adminResp.submittedTicketIds();
+        // Check if the user has the correct submitted tickets
+        assertEquals(2, adminTickets.size());
+        assertTrue(adminTickets.contains(101L), "Should contain ticketId 101");
+        assertTrue(adminTickets.contains(102L), "Should contain ticketId 102");
+
+        // Check AGENT entry
+        UserResponse agentResp = map.get(2L);
+        assertNotNull(agentResp);
+        assertEquals("agentUser", agentResp.username());
+        assertEquals("agent@example.com", agentResp.email());
+        assertEquals(Role.AGENT.name(), agentResp.role());
+
+        // Check if the user has the correct submitted tickets
+        List<Long> agentTickets = agentResp.submittedTicketIds();
+        assertEquals(2, agentTickets.size());
+        assertTrue(agentTickets.contains(103L), "Should contain ticketId 103");
+        assertTrue(agentTickets.contains(104L), "Should contain ticketId 104");
+
+        // Check regular USER entry
+        UserResponse regularResp = map.get(3L);
+        assertNotNull(regularResp);
+        assertEquals("regularUser", regularResp.username());
+        assertEquals("regular@example.com", regularResp.email());
+        assertEquals(Role.USER.name(), regularResp.role());
+        // Check if the user has the correct submitted tickets
+        List<Long> regularTickets = regularResp.submittedTicketIds();
+        assertEquals(2, regularTickets.size());
+        assertTrue(regularTickets.contains(105L), "Should contain ticketId 103");
+        assertTrue(regularTickets.contains(106L), "Should contain ticketId 104");
+
+        // Verify repository was called exactly once with correct arguments
+        verify(userRepository, times(1))
+                .findUsersByUsernameContainsIgnoreCase("us");
+    }
+
+    @Test
     void searchAgentAndAdminUsers_returnsOnlyAdminAndAgentUsers() throws Exception {
         // Arrange
         // 1) Build three fake User instances: one USER, one ADMIN, one AGENT
@@ -79,7 +167,6 @@ class UserServiceTest {
         verify(userRepository, times(1))
                 .findUsersByUsernameContainsIgnoreCaseAndRoleIsNot("us", Role.USER);
     }
-
 
     @Test
     void updateUser_whenUserFound_updatesFieldsAndSaves() throws Exception {
