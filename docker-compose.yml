@@ -27,29 +27,29 @@ services:
     volumes:
       - db_data:/var/lib/mysql
 
-#  frontend:
-#      build:
-#        context: ./ticket-frontend
-#      container_name: ticketsystem-frontend
-#      ports:
-#        - "5173:80"
-#      depends_on:
-#        - backend
-
   frontend:
-    build:
-      context: ./ticket-frontend
-      dockerfile: Dockerfile.dev
-    container_name: ticketsystem-frontend
-    working_dir: /app
-    volumes:
-      - ./ticket-frontend:/app
-      - /app/node_modules
-    ports:
-      - "5173:5173"
-    command: npm run dev -- --host
-    depends_on:
-      - backend
+      build:
+        context: ./ticket-frontend
+      container_name: ticketsystem-frontend
+      ports:
+        - "5173:80"
+      depends_on:
+        - backend
+
+#  frontend:
+#    build:
+#      context: ./ticket-frontend
+#      dockerfile: Dockerfile.dev
+#    container_name: ticketsystem-frontend
+#    working_dir: /app
+#    volumes:
+#      - ./ticket-frontend:/app
+#      - /app/node_modules
+#    ports:
+#      - "5173:5173"
+#    command: npm run dev -- --host
+#    depends_on:
+#      - backend
 
 
 volumes:
