@@ -1,5 +1,6 @@
 package com.ticketsystem.ticketsystem.TestUtils;
 
+import com.ticketsystem.ticketsystem.Comment.Comment;
 import com.ticketsystem.ticketsystem.User.Role;
 import com.ticketsystem.ticketsystem.User.User;
 import com.ticketsystem.ticketsystem.Ticket.Ticket;
@@ -10,6 +11,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EntityFactory {
+
+    //Create a comment and assign it to a ticket
+    public static Comment createComment (long commentId, User user, Ticket ticket) throws Exception {
+        Comment comment = new Comment();
+        comment.setText("Dummy comment");
+        comment.setAuthor(user);
+        comment.setTicket(ticket);
+
+        Field commmentIdField = Comment.class.getDeclaredField("id");
+        commmentIdField.setAccessible(true);
+        commmentIdField.set(comment, commentId);
+        return comment;
+    }
 
     /**
      * Creates a list of fake users.
