@@ -23,6 +23,12 @@ public class CommentService {
     @Autowired
     private TicketRepository ticketRepository;
 
+    /**
+     * Retrieves a single comment by its unique identifier.
+     * @param id the unique identifier of the comment to retrieve
+     * @return a {@link CommentResponse} containing the comment’s details
+     * @throws java.util.NoSuchElementException if no comment exists with the given ID
+     */
     public CommentResponse getCommentById(@PathVariable Long id) {
         Comment comment = commentRepository.findById(id).orElseThrow();
 
@@ -36,6 +42,13 @@ public class CommentService {
         );
     }
 
+    /**
+     * Creates a new comment on a ticket.
+     * @param request the {@link CommentRequest} containing: authorId, ticketId, and text
+     * @return a {@link CommentResponse} representing the newly created comment, including its assigned ID,
+     *         creation timestamp, and author/ticket references
+     * @throws ResponseStatusException with HTTP 404 (NOT_FOUND) if the specified user or ticket does not exist
+     */
     public CommentResponse addComment(CommentRequest request) {
         User author = userRepository.findById(request.authorId())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));

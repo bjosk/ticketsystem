@@ -20,6 +20,12 @@ public class TicketService{
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Updates the specified ticket with provided fields.
+     * @param ticketId the unique identifier of the ticket to update
+     * @param request  the {@link TicketUpdateRequest} containing new values
+     * @throws ResponseStatusException with HTTP 404 (NOT_FOUND) if the ticket or assigned user is not found
+     */
     public void updateTicket(Long ticketId, TicketUpdateRequest request) {
         Ticket ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket not found"));
@@ -45,11 +51,20 @@ public class TicketService{
         ticketRepository.save(ticket);
     }
 
-
+    /**
+     * Returns all valid ticket statuses.
+     * @return an array of {@link TicketStatus} enums representing every possible status
+     */
     public TicketStatus[] getTicketStatuses() {
         return TicketStatus.values();
     }
 
+    /**
+     * Retrieves all comments associated with the given ticket.
+     * @param ticketId the unique identifier of the ticket whose comments are requested
+     * @return a list of {@link CommentResponse} DTOs for each comment on the ticket
+     * @throws ResponseStatusException with HTTP 404 (NOT_FOUND) if no ticket exists with the given ID
+     */
     public List<CommentResponse> getCommentsForTicket(Long ticketId) {
         Ticket ticket = ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Ticket with ID " + ticketId + " not found"));
@@ -67,6 +82,13 @@ public class TicketService{
                 .toList();
     }
 
+    /**
+     * Retrieves a ticket by its unique identifier.
+     * @param id the unique identifier of the ticket to retrieve
+     * @return a {@link TicketResponse} containing the ticket’s details,
+     *         including ID, descriptions, status, timestamps, submitter, and assignee
+     * @throws ResponseStatusException with HTTP 404 (NOT_FOUND) if no ticket exists with the given ID
+     */
     public TicketResponse getTicketById(@PathVariable Long id) {
         Ticket ticket = ticketRepository.findById(id).orElseThrow();
 
@@ -82,7 +104,10 @@ public class TicketService{
         );
     }
 
-    // Get all tickets
+    /**
+     * Retrieves all existing tickets.
+     * @return a list of {@link TicketResponse} DTOs for every ticket in the system
+     */
     public List<TicketResponse> getAllTickets() {
         return ((List<Ticket>) ticketRepository.findAll()).stream()
                 .map(ticket -> new TicketResponse(
@@ -98,7 +123,15 @@ public class TicketService{
                 .toList();
     }
 
-    // Create a new ticket submitted by a user
+
+    /**
+     * Creates a new ticket submitted by a user.
+     * @param request the {@link TicketRequest} containing username, shortDescription, and description
+     * @return a {@link TicketResponse} representing the newly created ticket,
+     *         including its generated ID, timestamps, and associations
+     * @throws ResponseStatusException with HTTP 404 (NOT_FOUND) if the submitting user is not found
+     */
+
     public TicketResponse createTicket(TicketRequest request) {
         User user = userRepository.findByUsername(request.username())
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User with ID " + request.username() + " not found"));
