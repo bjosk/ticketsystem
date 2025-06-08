@@ -28,6 +28,10 @@ class UserServiceTest {
     @InjectMocks
     private UserService userService;
 
+    /**
+     * Verifies that {@code getAllUsers} returns a list of {@link UserResponse}
+     * matching all users returned by the repository.
+     */
     @Test
     void getAllUsers_ReturnsAllUsers() throws Exception {
         List<User> fakeUsers = EntityFactory.createUsers(10);
@@ -52,6 +56,11 @@ class UserServiceTest {
                 .findAll();
     }
 
+
+    /**
+     * Verifies that {@code searchAllUsers} returns users of any role
+     * whose usernames contain the query string (case-insensitive).
+     */
     @Test
     void searchAllUsers_returnsUsersWithAnyRole() throws Exception {
         // Create fake users
@@ -116,6 +125,11 @@ class UserServiceTest {
                 .findUsersByUsernameContainsIgnoreCase("us");
     }
 
+    /**
+     * Verifies that {@code searchAgentAndAdminUsers} filters out regular users,
+     * returning only AGENT and ADMIN roles matching the query.
+     */
+
     @Test
     void searchAgentAndAdminUsers_returnsOnlyAdminAndAgentUsers() throws Exception {
         // Arrange
@@ -168,6 +182,10 @@ class UserServiceTest {
                 .findUsersByUsernameContainsIgnoreCaseAndRoleIsNot("us", Role.USER);
     }
 
+    /**
+     * Verifies that {@code updateUser} applies non-empty fields from the request
+     * and persists the changes via repository.save().
+     */
     @Test
     void updateUser_whenUserFound_updatesFieldsAndSaves() throws Exception {
         // Arrange - Build a request that changes username, email, and role
@@ -209,7 +227,9 @@ class UserServiceTest {
         verify(userRepository, times(1)).save(existing);
     }
 
-
+    /**
+     * Verifies that {@code createUser} throws a 409 conflict when the username already exists.
+     */
     @Test
     void createUser_whenUsernameExists_throwsConflict() {
         // Arrange - simulate a database check that finds the username already in use.
@@ -236,6 +256,9 @@ class UserServiceTest {
         verify(userRepository, never()).save(any(User.class));
     }
 
+    /**
+     * Verifies that {@code createUser} throws a 409 conflict when the email already exists.
+     */
     @Test
     void createUser_whenEmailExists_throwsConflict() {
         // Arrange - simulate a database check that finds the username is not in use and email already in use

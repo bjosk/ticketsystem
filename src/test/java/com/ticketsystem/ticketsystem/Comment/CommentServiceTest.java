@@ -35,6 +35,10 @@ public class CommentServiceTest {
     @InjectMocks
     private CommentService commentService;
 
+    /**
+     * Verifies that {@code getCommentById} throws a {@link NoSuchElementException}
+     * when {@link CommentRepository#findById} returns empty.
+     */
     @Test
     void getCommentById_whenCommentDoesNotExist_thenThrowException() {
 
@@ -51,6 +55,12 @@ public class CommentServiceTest {
         verify(commentRepository, times(1)).findById(anyLong());
     }
 
+    /**
+     * Verifies that {@code addComment} correctly creates and returns a {@link CommentResponse}
+     * when both the user and ticket exist.
+     *
+     * @throws Exception if an unexpected error occurs during test execution
+     */
     @Test
     void addComment_whenTicketAndUserExists_thenCreateComment() throws Exception {
         // Arrange: build the request DTO with authorId=1, ticketId=25, and the comment text

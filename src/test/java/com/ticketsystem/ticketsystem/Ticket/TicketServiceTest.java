@@ -43,7 +43,9 @@ class TicketServiceTest {
     private Comment commentA;
     private Comment commentB;
 
-
+    /**
+     * Prepares test fixtures
+     */
     @BeforeEach
     void setUp() throws Exception {
         users = EntityFactory.createUsers(5);
@@ -60,6 +62,10 @@ class TicketServiceTest {
         ticketWithoutComments.setComments(Collections.emptyList());
     }
 
+    /**
+     * Verifies that calling {@code updateTicket} with a non-existent ticket ID
+     * throws a 404 {@link ResponseStatusException} and does not attempt to save.
+     */
     @Test
     void updateTicket_whenTicketDoesntExist_shouldThrowException() throws Exception {
 
@@ -84,6 +90,10 @@ class TicketServiceTest {
         verify(ticketRepository, never()).save(any(Ticket.class));
     }
 
+    /**
+     * Verifies that calling {@code updateTicket} with an unknown assignee
+     * throws a 404 {@link ResponseStatusException} and does not save changes.
+     */
     @Test
     void updateTicket_whenUserDoesntExist_shouldThrowException() throws Exception {
         when(ticketRepository.findById(900L)).thenReturn(Optional.of(ticketWithComments));
@@ -116,6 +126,10 @@ class TicketServiceTest {
 
     }
 
+    /**
+     * Verifies that {@code getCommentsForTicket} returns mapped DTOs
+     * when the ticket exists and has comments.
+     */
     @Test
     void getCommentsForTicket_whenTicketExists_shouldReturnComments() throws ReflectiveOperationException {
         // Stub repository
@@ -149,6 +163,10 @@ class TicketServiceTest {
 
     }
 
+    /**
+     * Verifies that {@code getCommentsForTicket} throws a 404
+     * when the ticket is not found.
+     */
     @Test
     void getCommentsForTicket_whenTicketNotFound_throwsNotFound() {
         // Arrange: repository returns no ticket
@@ -168,14 +186,19 @@ class TicketServiceTest {
         verify(ticketRepository, times(1)).findById(900L);
     }
 
-
-
+    /**
+     * Verifies that {@code getTicketStatuses} returns all enum values.
+     */
     @Test
     void getTicketStatuses_returnsAllEnumValues() {
         TicketStatus[] actual = ticketService.getTicketStatuses();
         assertArrayEquals(TicketStatus.values(), actual);
     }
 
+    /**
+     * Verifies that {@code createTicket} returns a correct {@link TicketResponse}
+     * when the submitting user exists.
+     */
     @Test
     void createTicket_whenUserExists_shouldReturnTicketResponse() throws Exception {
         // Arrange: build a TicketRequest and build a fake User
