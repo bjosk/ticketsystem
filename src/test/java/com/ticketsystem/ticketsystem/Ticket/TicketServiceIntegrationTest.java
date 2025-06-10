@@ -1,24 +1,33 @@
 package com.ticketsystem.ticketsystem.Ticket;
 
+import com.ticketsystem.ticketsystem.User.UserRequest;
+import com.ticketsystem.ticketsystem.User.UserResponse;
+import com.ticketsystem.ticketsystem.User.UserService;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ExtendWith(MockitoExtension.class)
+@Transactional
+@Rollback
 public class TicketServiceIntegrationTest {
     @Autowired
     private TicketService ticketService;
 
     @Autowired
     private TicketRepository ticketRepository;
+
+    @Autowired
+    private UserService userService;
 
     @Test
     void createTicket() {

@@ -3,27 +3,36 @@ package com.ticketsystem.ticketsystem.User;
 import com.ticketsystem.ticketsystem.Ticket.Ticket;
 import com.ticketsystem.ticketsystem.Ticket.TicketRepository;
 import com.ticketsystem.ticketsystem.Ticket.TicketStatus;
+import jakarta.transaction.Transactional;
+import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Test;
+
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.springframework.test.context.jdbc.Sql.ExecutionPhase.BEFORE_TEST_CLASS;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ExtendWith(MockitoExtension.class)
+@Transactional
+@Rollback
 public class UserServiceIntegrationTest {
 
     @Autowired
@@ -32,16 +41,6 @@ public class UserServiceIntegrationTest {
     private UserRepository userRepository;
     @Autowired
     private TicketRepository ticketRepository;
-
-    @Before
-    void setUp() {
-
-    }
-
-    @AfterEach
-    void cleanUp() {
-
-    }
 
     @Test
     void createUser() throws Exception {
@@ -55,12 +54,10 @@ public class UserServiceIntegrationTest {
         assertEquals(userResponse1.username(), userRequest1.username());
         assertTrue(userRepository.findByUsername("JohnDoe").isPresent());
 
-        userRepository.deleteUserByUsername("JohnDoe");
-
     }
 
     @Test
-    void getAllUsers(){
-
+    void getUserByUsername() throws Exception {
+        assertTrue(userRepository.findByUsername("anotherTest").isPresent());
     }
 }

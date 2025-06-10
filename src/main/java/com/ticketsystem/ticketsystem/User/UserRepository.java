@@ -16,6 +16,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
     List<User> findUsersByUsernameContainsIgnoreCase(String username);
 
     @Modifying
-    @Transactional
     void deleteUserByUsername(String username);
 }
