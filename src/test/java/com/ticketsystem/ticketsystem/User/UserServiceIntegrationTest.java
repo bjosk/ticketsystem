@@ -47,13 +47,10 @@ public class UserServiceIntegrationTest {
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private TicketRepository ticketRepository;
 
-    @Autowired
-    private MockMvc mockMvc;
-
-
+    /**
+     * Should successfully create a new user and persist it.
+     */
     @Test
     void createUser_success() throws Exception {
         UserRequest userRequest1 = new UserRequest("JohnDoe", "12345", "johndoe@example.com");
@@ -64,12 +61,18 @@ public class UserServiceIntegrationTest {
 
     }
 
+    /**
+     * Should throw conflict exception when creating a user with an existing username.
+     */
     @Test
     void createUser_fail() throws Exception {
         UserRequest userRequest1 = new UserRequest("AnotherTest", "12345", "johndoe@example.com");
         assertThrows(ResponseStatusException.class, () -> userService.createUser(userRequest1));
     }
 
+    /**
+     * Should update an existing user.
+     */
     @Test
     void updateUser_success() {
         UserUpdateRequest upd = new UserUpdateRequest("AnotherTest", "updatedTest", "new@example.com", "ADMIN");
@@ -80,30 +83,45 @@ public class UserServiceIntegrationTest {
         assertEquals(Role.valueOf(upd.role()), userRepository.findByUsername("updatedTest").orElseThrow().getRole());
     }
 
+    /**
+     * Should throw not found exception when updating a non-existent user.
+     */
     @Test
     void updateUser_notFound() {
         UserUpdateRequest upd = new UserUpdateRequest("noneexisting", "updatedTest", "new@example.com", "ADMIN");
         assertThrows(ResponseStatusException.class, () -> userService.updateUser(upd));
     }
 
+    /**
+     * Should return only agent/admin users matching the query.
+     */
     @Test
     void searchAgentAndAdminUsers() {
         List<UserResponse> list = userService.searchAgentAndAdminUsers("");
         assertEquals(3, list.size());
     }
 
+    /**
+     * Should return all users matching the query regardless of role.
+     */
     @Test
     void searchAllUsers() {
         List<UserResponse> list = userService.searchAllUsers("a");
         assertEquals(4, list.size());
     }
 
+    /**
+     * Should retrieve a list of all users.
+     */
     @Test
     void getAllUsers() {
         List<UserResponse> all = userService.getAllUsers();
         assertFalse(all.isEmpty());
     }
 
+    /**
+     * Should return tickets submitted by a user.
+     */
     @Test
     void getTicketsByUserId_success() {
         User user = userRepository.findByUsername("AnotherTest").orElseThrow();
@@ -113,13 +131,19 @@ public class UserServiceIntegrationTest {
         assertEquals(94, tickets.get(0).ticketId());
     }
 
+    /**
+     * Should throw not found exception for non-existing user ID.
+     */
     @Test
     void getTicketsByUserId_notFound() {
         assertThrows(ResponseStatusException.class, () -> userService.getTicketsByUserId(846684L));
     }
 
+    /**
+     * Should return a user
+     */
     @Test
     void getUserByUsername() throws Exception {
-        assertTrue(userRepository.findByUsername("anotherTest").isPresent());
+        assertTrue(userRepository.findByUsername("AnotherTest").isPresent());
     }
 }

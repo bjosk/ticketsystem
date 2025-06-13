@@ -36,6 +36,9 @@ public class UserControllerIntegrationTest {
 
     ObjectMapper mapper = new ObjectMapper();
 
+    /**
+     * GET /api/users/{id}/tickets should return tickets for the specified user.
+     */
     @Test
     void getTicketsByUserIdEndpoint() throws Exception {
         mockMvc.perform(get("/api/users/" + 15 + "/tickets")
@@ -44,9 +47,12 @@ public class UserControllerIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$.length()").value(1))
-                .andExpect(jsonPath("$[0].ticketId").value(94));
+                .andExpect(jsonPath("$[0].ticketId").value(94)); // The user has a ticket with id 15 in the database.
     }
 
+    /**
+     * GET /api/users/searchAgentAndAdmin should return agent/admin users matching query.
+     */
     @Test
     void searchAgentAndAdminUsersEndpoint() throws Exception {
         String query = "ano";
@@ -59,6 +65,9 @@ public class UserControllerIntegrationTest {
                 .andExpect(jsonPath("$[0].role").value("ADMIN"));
     }
 
+    /**
+     * GET /api/users/searchAllUsers should return users matching  query.
+     */
     @Test
     void searchAllUsersEndpoint() throws Exception {
         String query = "";
@@ -67,9 +76,12 @@ public class UserControllerIntegrationTest {
                         .param("usernameQuery", query)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(6));
+                .andExpect(jsonPath("$.length()").value(6)); // 6 in database
     }
 
+    /**
+     * PUT /api/users should update an existing user's username and persist in the database.
+     */
     @Test
     void updateUserEndpoint() throws Exception {
         UserUpdateRequest userUpdateRequest = new UserUpdateRequest("agent", "agentNew", "agentNew@example.com", "USER");
@@ -86,6 +98,9 @@ public class UserControllerIntegrationTest {
 
     }
 
+    /**
+     * POST /api/users should create a new user and return its details. Checks if persisted in database.
+     */
     @Test
     void createUserEndpoint() throws Exception {
         UserRequest userRequest = new UserRequest("fakeUser22", passwordEncoder.encode("something"), "fake@example.com");
@@ -99,6 +114,9 @@ public class UserControllerIntegrationTest {
         assertTrue(userRepository.findByUsername("fakeUser22").isPresent());
     }
 
+    /**
+     * GET /api/users should list all users as JSON array.
+     */
     @Test
     void getAllUsersEndpoint() throws Exception {
         mockMvc.perform(get("/api/users"))
