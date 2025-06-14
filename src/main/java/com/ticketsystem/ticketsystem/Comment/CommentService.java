@@ -2,6 +2,8 @@ package com.ticketsystem.ticketsystem.Comment;
 
 import com.ticketsystem.ticketsystem.Ticket.Ticket;
 import com.ticketsystem.ticketsystem.Ticket.TicketRepository;
+import com.ticketsystem.ticketsystem.Ticket.TicketStatus;
+import com.ticketsystem.ticketsystem.User.Role;
 import com.ticketsystem.ticketsystem.User.User;
 import com.ticketsystem.ticketsystem.User.UserRepository;
 import com.ticketsystem.ticketsystem.User.UserService;
@@ -62,6 +64,11 @@ public class CommentService {
         comment.setTicket(ticket);
 
         Comment saved = commentRepository.save(comment);
+
+        if (author.getRole() == Role.USER && ticket.getTicketStatus() != TicketStatus.NEW) {
+            ticket.setTicketStatus(TicketStatus.IN_PROGRESS);
+            ticketRepository.save(ticket);
+        }
 
         return new CommentResponse(
                 saved.getId(),
