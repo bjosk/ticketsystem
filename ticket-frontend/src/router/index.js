@@ -5,12 +5,18 @@ import { useAuthStore } from "@/stores/auth.js";
 import TicketView from "@/views/TicketView.vue";
 import RaiseTicketView from "@/views/RaiseTicketView.vue";
 import ModifyUser from "@/views/ModifyUser.vue";
+import RegisterView from "@/views/RegisterView.vue";
 
 const routes = [
   {
     path: '/login',
     name: 'Login',
     component: LoginView
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    component: RegisterView
   },
   {
     path: '/home',
