@@ -44,7 +44,7 @@ const updateTicket = async () => {
 
 //Opens up the search modal for assigning an agent to a ticket
 const openUserSearchModal = () => {
-  if (auth.user?.role !== 'AGENT') return
+  if (auth.user?.role === 'USER') return
   showModalOpen.value = true
 }
 
