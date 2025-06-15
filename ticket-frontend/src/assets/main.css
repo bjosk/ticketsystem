@@ -25,3 +25,16 @@ textarea {
 .table-bg {
   --bs-table-bg: #f8f9fa !important;
 }
+
+.mb-6 {
+  margin-bottom: 3.5rem !important;
+}
+
+.mb-7 {
+  margin-bottom: 4rem !important;
+}
+
+.mb-8 {
+  margin-bottom: 4.5rem !important;
+}
+

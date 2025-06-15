@@ -4,6 +4,7 @@
   import axios from '@/services/axios';
   import { ref, onMounted } from 'vue'
   import router from "@/router/index.js";
+  import Footer from "@/components/Footer.vue";
 
   const auth = useAuthStore();
   const tickets = ref([]);
@@ -41,7 +42,7 @@
 
 <template>
     <AppNavBar />
-  <div class="container mt-4 mb-4 p-3 bg-body-tertiary rounded">
+  <div class="container mt-4 mb-8 p-3 bg-body-tertiary rounded">
     <h2 v-if="auth.user?.role !== 'USER'">All Tickets</h2>
     <h2 v-if="auth.user?.role === 'USER'">Your Tickets</h2>
 
@@ -71,6 +72,7 @@
     </table>
     <p v-else>No tickets found.</p>
   </div>
+  <Footer/>
 </template>
 
 <style scoped>

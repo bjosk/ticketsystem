@@ -5,6 +5,7 @@ import { ref } from "vue";
 import { useAuthStore } from "@/stores/auth.js";
 import axios from "@/services/axios";
 import { useRouter } from "vue-router";
+import Footer from "@/components/Footer.vue";
 
 const router = useRouter();
 const auth = useAuthStore();
@@ -119,6 +120,7 @@ const submitTicket = async () => {
       </button>
     </div>
   </div>
+  <Footer/>
 
   <!-- SEARCH USER MODAL -->
   <SearchAllUsers

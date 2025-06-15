@@ -60,5 +60,10 @@ const submit = async () => {
     <div v-if="error" class="alert alert-danger mt-3">
       {{ error }}
     </div>
+    <div class="d-flex justify-content-center align-content-center mt-3">
+      <p class="me-2">Dont have an account yet? </p>
+      <a class="" href="/register">Register</a>
+    </div>
   </form>
+
 </template>

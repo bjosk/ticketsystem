@@ -12,7 +12,7 @@ const logout = () => {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand navbar-light bg-light">
+  <nav class="navbar navbar-expand navbar-light bg-light sticky-top">
     <a class="navbar-brand" href="#">
       <img src="./icons/FireLoge.png" alt="Logo" width="30" class="d-inline-block align-text-top" />
       TicketSystem

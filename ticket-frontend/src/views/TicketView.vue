@@ -8,6 +8,7 @@ import {computed} from "vue";
 import NewComment from "@/components/NewComment.vue";
 import {useAuthStore} from "@/stores/auth.js";
 import SearchAllUsers from "@/components/SearchAllUsers.vue";
+import Footer from "@/components/Footer.vue";
 
 const auth = useAuthStore();
 const route = useRoute();
@@ -237,6 +238,8 @@ onMounted( async () => {
 
 
   </div>
+
+  <Footer/>
 
   <SearchAllUsers
     :fetch-agent-and-admin-only="true"

@@ -41,6 +41,10 @@ const routes = [
     name: 'modifyUsers',
     component: ModifyUser,
     meta: { requiresAuth: true, requiresRoles: ['AGENT', 'ADMIN'] }
+  },
+  {
+    path: "/",
+    redirect: '/home',
   }
 ]
 

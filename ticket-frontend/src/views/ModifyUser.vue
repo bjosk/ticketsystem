@@ -4,6 +4,7 @@ import SearchAllUsers from "@/components/SearchAllUsers.vue";
 import AppNavBar from "@/components/AppNavBar.vue";
 import axios from "@/services/axios.js";
 import {useAuthStore} from "@/stores/auth.js";
+import Footer from "@/components/Footer.vue";
 
 const auth = useAuthStore();
 const searchModalOpen = ref(false)
@@ -105,6 +106,7 @@ const modifyUser = async () => {
 
     </div>
   </div>
+  <Footer/>
 
   <SearchAllUsers
     :fetchAgentAndAdminOnly="false"
